@@ -1,0 +1,92 @@
+backend:
+  name: git-gateway
+  branch: master
+  commit_messages:
+    create: "Create {{collection}} “{{slug}}”"
+    update: "Update {{collection}} “{{slug}}”"
+    delete: "Delete {{collection}} “{{slug}}”"
+    uploadMedia: "[skip ci] Upload “{{path}}”"
+    deleteMedia: "[skip ci] Delete “{{path}}”"
+
+local_backend: true
+
+media_folder: static/img
+public_folder: /img
+
+collections:
+  - name: blog
+    label: Blog
+    folder: "src/posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - { label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "SEO Title", name: "seoTitle", widget: "string", pattern: ["^.{0,65}$", "Can;t have more than 65 characters"] }
+      - { label: "SEO Description", name: "seoDescription", widget: "string", pattern: ["^.{0,165}$", "Can;t have more than 160 characters"] }
+      - { label: "Featured Image", name: "featuredimage", widget: image }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Modified Date", name: "moddate", widget: "datetime" }
+      - { label: "Enable Table of Contents", name: "tableofcontent", widget: "boolean", default: true }
+      - { label: "Author", name: author, widget: relation, collection: authors, valueField: title, searchFields: ["title"], displayFields: ["title"]}
+      - { label: "Category", name: category, widget: relation, collection: categories, valueField: title, searchFields: ["title"], displayFields: ["title"]}
+      - { label: "Enable Rating", name: "rating", widget: "boolean", default: true }
+      - { label: "Rating Count", name: "rcount", widget: "number", default: 0 }
+      - { label: "Rating Value", name: "rvalue", widget: "number", default: 5.0 }
+      - { label: "Before Body", name: "beforebody", widget: "markdown", default: "", required: false }
+      - { label: "Enable Products Table", name: "productstable", widget: "boolean", default: true }
+      - { label: "Products Table Title", name: "productstabletitle", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown", default: "", required: false }
+      - { label: "Products", name: "products", widget: "list", collapsed: false, minimum: 0, fields: [{ label: "Name", name: "name", widget: "string" }, { label: "Product Image", name: "image", widget: "image" }, { label: "Product Link", name: "link", widget: "string" }, { label: "Product Body", name: "body", widget: "markdown" }, { label: "Pros", name: "pros", widget: "list", collapsed: false, minimum: 0, field: { label: "Value", name: "pro", widget: "string" } }, { label: "Cons", name: "cons", widget: list, collapsed: false, minimum: 0, field: { label: "Value", name: "con", widget: "string" } }, { label: "Specification Table", name: "specs", widget: "list", collapsed: false, minimum: 0, fields: [{ label: "Parameter", name: "name", widget: "string" }, { label: "Value", name: "value", widget: "string" }] }] }
+      - { label: "After Body", name: "afterbody", widget: "markdown", default: "", required: false }
+      - { label: "Sidebar", name: "sidebar", widget: "object", required: false, fields: [{ label: "Table of Contents", name: "stoc", widget: list, collapsed: false, minimum: 0, fields: [{ label: "Name", name: "name", widget: "string" }, { label: "Child", name: "level", widget: "boolean", default: true }] }, { label: "Second Title", name: "stitle", widget: "string", default: "Editor's Choice", required: false }, { label: "Sidebar Image", name: "image", widget: "image", required: false }, { label: "Sidebar Link Text", name: "atext", widget: "string", required: false }, { label: "Sidebar Link Href", name: "alink", widget: "string", required: false }] }
+      - { label: "Frequently Asked Questions (OPTIONAL)", name: "faq", collapsed: false, minimum: 0, widget: list, fields: [{ label: "Question", name: "ques", widget: "string" }, { label: "Answer", name: "ans", widget: "text" }] }
+
+  - name: pages
+    label: Pages
+    folder: "src/pages"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Template Key", name: "templateKey", widget: "hidden", default: "default-page" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "SEO Title", name: "seoTitle", widget: "string", pattern: ["^.{0,65}$", "Can;t have more than 65 characters"] }
+      - { label: "SEO Description", name: "seoDescription", widget: "string", pattern: ["^.{0,165}$", "Can;t have more than 160 characters"] }
+      - { label: "Body", name: "body", widget: "markdown", default: "", required: false }
+      - { label: "Schema", name: "schema", widget: string, required: false}
+
+  - name: categories
+    label: Categories
+    folder: "src/categories"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Template Key", name: "templateKey", widget: "hidden", default: "category-page" }
+      - { label: "Category Name", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Category Description", name: "description", widget: "string" }
+      - { label: "SEO Title", name: "seoTitle", widget: "string", pattern: ["^.{0,65}$", "Can;t have more than 65 characters"] }
+      - { label: "SEO Description", name: "seoDescription", widget: "string", pattern: ["^.{0,165}$", "Can;t have more than 160 characters"] }
+
+  - name: authors
+    label: Authors
+    folder: "src/authors"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Template Key", name: "templateKey", widget: "hidden", default: "author-page" }
+      - { label: "Author Name", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Author Image", name: "image", widget: image }
+      - { label: "Author Description", name: "description", widget: "string" }
+      - { label: "SEO Title", name: "seoTitle", widget: "string", pattern: ["^.{0,65}$", "Can;t have more than 65 characters"] }
+      - { label: "SEO Description", name: "seoDescription", widget: "string", pattern: ["^.{0,165}$", "Can;t have more than 160 characters"] }
