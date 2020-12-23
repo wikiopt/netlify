@@ -1,15 +1,15 @@
 const path = require("path");
-const siteURL = "https://www.pistolzone.com";
-const disqus = "pistolzone-com";
+const siteURL = "https://eloquent-lewin-ddd922.netlify.app/";
+const disqus = "Fahad Blogs";
 
 module.exports = {
   siteMetadata: {
-    name: "Pistolzone",
-    title: "Pistolzone",
-    description: "The Glock 26 is one of the best guns for concealed carry. Because it holds many rounds and is still lightweight, this gun has become.",
+    name: "Fahad Blogs",
+    title: "Fahad Blogs",
+    description: "We Deliver the Best.",
     social: {
-      facebook: "www.facebook.com/pistolzone",
-      instagram: "www.instagram.com/pistolzone",
+      facebook: "https://eloquent-lewin-ddd922.netlify.app/",
+      instagram: "https://eloquent-lewin-ddd922.netlify.app/",
       twitter: "",
       youtube: "",
     },
